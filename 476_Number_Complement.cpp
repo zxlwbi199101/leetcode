@@ -1,5 +1,16 @@
-// solution 1
+/*
+ * https://leetcode.com/problems/number-complement/#/description
+ *
+ * Given a positive integer, output its complement number.
+ * The complement strategy is to flip the bits of its binary representation.
+ *
+ */
 
+#include <iostream>
+using namespace std;
+
+
+// solution 1
 class Solution {
 public:
   int findComplement(int num) {
@@ -16,9 +27,6 @@ public:
 
 
 // test case
-#include <iostream>
-using namespace std;
-
 int main() {
   Solution solution;
   cout << solution.findComplement(5) << endl;

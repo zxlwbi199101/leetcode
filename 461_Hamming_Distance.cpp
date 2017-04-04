@@ -1,5 +1,17 @@
-// solution 1
+/*
+ * https://leetcode.com/problems/hamming-distance/#/description
+ *
+ * The Hamming distance between two integers is the number of positions at which
+ * the corresponding bits are different.
+ * Given two integers x and y, calculate the Hamming distance.
+ *
+ */
 
+#include <iostream>
+using namespace std;
+
+
+// solution 1
 // class Solution {
 // public:
 //   int hammingDistance(int x, int y) {
@@ -18,8 +30,8 @@
 //   }
 // };
 
-// solution 2
 
+// solution 2
 class Solution {
 public:
   int hammingDistance(int x, int y) {
@@ -35,10 +47,8 @@ public:
   }
 };
 
-// test case
-#include <iostream>
-using namespace std;
 
+// test case
 int main() {
   Solution solution;
   cout << solution.hammingDistance(1, 4) << endl;
