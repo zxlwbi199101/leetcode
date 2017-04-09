@@ -62,8 +62,8 @@ int main() {
   test1.push_back("asdq");
   test1.push_back("asdz");
   vector<string> result1 = solution.findWords(test1);
-  for (int i = 0; i < result1.size(); ++i) {
-    cout << result1[i] << endl;
+  for (int i : result1) {
+    cout << i << endl;
   }
 
   return 0;

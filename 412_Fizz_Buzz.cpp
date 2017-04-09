@@ -44,8 +44,8 @@ int main() {
   Solution solution;
 
   vector<string> result1 = solution.fizzBuzz(15);
-  for (int i = 0; i < result1.size(); ++i) {
-    cout << result1[i] << endl;
+  for (int i : result1) {
+    cout << i << endl;
   }
 
   return 0;
