@@ -19,8 +19,7 @@ using namespace std;
 class Solution {
 public:
   int arrayPairSum(vector<int>& nums) {
-    // qsort(nums, 0, nums.size() - 1);
-    qsortIterate(nums);
+    qsortIterative(nums);
 
     int sum = 0;
     for (int i = 0; i < nums.size(); i += 2) {
@@ -29,65 +28,33 @@ public:
     return sum;
   }
 
-  void qsort(vector<int>& nums, int start, int end) {
-    if (start >= end) return;
+  int partition(vector<int>& v, int start, int end) {
+    int pivot = v[end];
+    int index = start;
 
-    int pivot = nums[start];
-    int low = start;
-    int high = end;
-
-    while (low < high) {
-      while (low < high && nums[high] >= pivot) high--;
-      while (low < high && nums[low] < pivot) low++;
-
-      if (low == high) break;
-      swap(nums[low], nums[high]);
+    for (int i = start; i < end; i++) {
+      if (v[i] <= pivot) swap(v[i], v[index++]);
     }
 
-    if (nums[start] > nums[low]) {
-      swap(nums[start], nums[low]);
-    }
-
-    qsort(nums, start, low);
-    qsort(nums, high + 1, end);
+    if (v[index] > pivot) swap(v[index], v[end]);
+    return index;
   }
 
-  void qsortIterate(vector<int>& nums) {
-    // store position of each partial qsort
-    queue<int> que;
+  void qsortIterative(vector<int>& v) {
+    stack<pair<int, int>> stk;
+    stk.push(make_pair(0, v.size() - 1));
 
-    que.push(0);
-    que.push(nums.size() - 1);
+    int start, end, pivotIndex;
 
-    while (!que.empty()) {
-      int start = que.front();
-      que.pop();
+    while (!stk.empty()) {
+      start = stk.top().first;
+      end = stk.top().second;
+      stk.pop();
 
-      int end  = que.front();
-      que.pop();
+      pivotIndex = partition(v, start, end);
 
-      int pivot = nums[start];
-      int low = start;
-      int high = end;
-
-      if (start >= end) continue;
-
-      while (true) {
-        while (low < high && nums[high] >= pivot) high--;
-        while (low < high && nums[low] < pivot) low++;
-
-        if (low == high) break;
-        swap(nums[low], nums[high]);
-      }
-
-      if (nums[start] > nums[low]) {
-        swap(nums[start], nums[low]);
-      }
-
-      que.push(high + 1);
-      que.push(end);
-      que.push(start);
-      que.push(low);
+      if (pivotIndex - 1 > start) stk.push(make_pair(start, pivotIndex - 1));
+      if (pivotIndex + 1 < end) stk.push(make_pair(pivotIndex + 1, end));
     }
   }
 };
@@ -101,8 +68,7 @@ int main() {
   // int result = solution.arrayPairSum(nums);
   // cout << result << endl;
 
-  solution.qsortIterate(nums);
-  // solution.qsort(nums, 0, nums.size() - 1);
+  solution.qsortIterative(nums);
   for (int i : nums) {
     cout << i << endl;
   }

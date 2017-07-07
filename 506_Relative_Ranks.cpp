@@ -23,7 +23,7 @@ public:
     vector<int> copy (nums);
     map<int, int> scoreRank;
 
-    qsortIterate(copy);
+    qsortIterative(copy);
 
     for (int i = 0, len = nums.size(); i < len; i++) {
       scoreRank[copy[i]] = len - i - 1;
@@ -44,41 +44,33 @@ public:
     return result;
   }
 
-  void qsortIterate(vector<int>& nums) {
-    queue<int> que;
-    int all = 0;
+  int partition(vector<int>& v, int start, int end) {
+    int pivot = v[end];
+    int index = start;
 
-    que.push(0);
-    que.push(nums.size() - 1);
+    for (int i = start; i < end; i++) {
+      if (v[i] <= pivot) swap(v[i], v[index++]);
+    }
 
-    while (!que.empty()) {
-      int start = que.front();
-      que.pop();
+    if (v[index] > pivot) swap(v[index], v[end]);
+    return index;
+  }
 
-      int end = que.front();
-      que.pop();
+  void qsortIterative(vector<int>& v) {
+    stack<pair<int, int>> stk;
+    stk.push(make_pair(0, v.size() - 1));
 
-      if (start >= end) continue;
+    int start, end, pivotIndex;
 
-      int first = start;
-      int last = end;
-      int pivot = nums[start];
+    while (!stk.empty()) {
+      start = stk.top().first;
+      end = stk.top().second;
+      stk.pop();
 
-      while (first < last) {
-        while (first < last && nums[last] > pivot) last--;
-        while (first < last && nums[first] <= pivot) first++;
+      pivotIndex = partition(v, start, end);
 
-        if (first < last && nums[last] < nums[first]) swap(nums[last], nums[first]);
-      }
-
-      if (pivot > nums[first]) {
-        swap(nums[start], nums[first]);
-      }
-
-      que.push(last + 1);
-      que.push(end);
-      que.push(start);
-      que.push(first);
+      if (pivotIndex - 1 > start) stk.push(make_pair(start, pivotIndex - 1));
+      if (pivotIndex + 1 < end) stk.push(make_pair(pivotIndex + 1, end));
     }
   }
 };
@@ -96,7 +88,7 @@ int main() {
 
   // vector<int> nums = {2,5,4,3,6,7,8,0,9,13,76,15};
 
-  // solution.qsortIterate(nums);
+  // solution.qsortIterative(nums);
   // for (int i : nums) {
   //   cout << i << endl;
   // }
