@@ -39,7 +39,9 @@ public:
         sum += temp -> left -> val;
       } else if (temp -> left) {
         stk.push(temp -> left);
-      } else if (temp -> right) {
+      }
+
+      if (temp -> right) {
         stk.push(temp -> right);
       }
     }
