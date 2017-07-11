@@ -19,8 +19,6 @@ using namespace std;
 class Solution {
 public:
   string reverseStr(string s, int k) {
-    if (k > s.size()) return s;
-
     for (int i = 0; i < s.size(); i += k * 2) {
       int left = (i + k) > s.size() ? (s.size() - i) : k;
 
