@@ -1,4 +1,4 @@
- /*
+/*
  * https://leetcode.com/problems/pascals-triangle/description/
  *
  * Given numRows, generate the first numRows of Pascal's triangle.
