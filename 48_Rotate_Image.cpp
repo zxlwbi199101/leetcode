@@ -24,7 +24,7 @@ public:
         temp = matrix[i][j];
 
         matrix[i][j] = matrix[width - j - 1][i]; // left top
-        matrix[width - j - i][i] = matrix[width - i - 1][width - j - 1]; // left bottom
+        matrix[width - j - 1][i] = matrix[width - i - 1][width - j - 1]; // left bottom
         matrix[width - i - 1][width - j - 1] = matrix[j][width - i - 1]; // right bottom
         matrix[j][width - i - 1] = temp; // right top
       }
