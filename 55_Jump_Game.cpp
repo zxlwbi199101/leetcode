@@ -23,7 +23,9 @@ using namespace std;
 class Solution {
 public:
   bool canJump(vector<int>& nums) {
-    int lastIndex = nums[i - 1];
+    if (!nums.size()) return true;
+
+    int lastIndex = nums[nums.size() - 1];
     for (int i = nums.size() - 1; i >= 0; i--) {
       if (nums[i] + i >= lastIndex) {
         lastIndex = i;
@@ -38,7 +40,7 @@ public:
 int main() {
   Solution solution;
 
-  vector<int> nums = {2,3,1,1,4};
+  vector<int> nums = {3,2,1,0,4};
   cout << solution.canJump(nums) << endl;
 
   return 0;
