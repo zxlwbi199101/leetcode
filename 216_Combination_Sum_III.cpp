@@ -29,34 +29,38 @@ public:
     int sum;
     int num;
     int len;
-    vector<int> list;
-    Meta(int s, int n, int l, vector<int> list) :
-    sum(s), num(n), len(l), list(list) {};
+    Meta(int s, int n, int l) :
+    sum(s), num(n), len(l) {};
   };
 
   vector<vector<int>> combinationSum3(int k, int n) {
     vector<vector<int>> result;
+    vector<int> cache(k);
     stack<Meta> s;
 
-    s.push(Meta(0, 0, 0, vector<int>(k)));
+    s.push(Meta(0, 0, 0));
 
     while (!s.empty()) {
       Meta m = s.top();
       s.pop();
 
+      if (m.len) {
+        cache[m.len - 1] = m.num;
+      }
       if (m.len == k - 1) {
         if (n - m.sum > m.num && n - m.sum <= 9) {
-          m.list[m.len] = n - m.sum;
-          result.push_back(m.list);
+          cache[m.len] = n - m.sum;
+          result.push_back(cache);
         }
 
         continue;
       }
 
       for (int i = m.num + 1; i < 10; i++) {
-        vector<int> l = vector<int> (m.list);
-        l[m.len] = i;
-        s.push(Meta(m.sum + i, i, m.len + 1, l));
+        if (m.sum + (i * 2 + k - m.len - 1) * (k - m.len) / 2 <= n &&
+            m.sum + (9 + 9 - k + m.len + 1) * (k - m.len) / 2 >= n) {
+          s.push(Meta(m.sum + i, i, m.len + 1));
+        }
       }
     }
 
@@ -68,7 +72,7 @@ public:
 int main() {
   Solution solution;
 
-  for (vector<int> row : solution.combinationSum3(1, 1)) {
+  for (vector<int> row : solution.combinationSum3(3, 15)) {
     for (int i : row) cout << i << " ";
     cout << endl;
   }
