@@ -19,19 +19,39 @@ using namespace std;
 // solution 1
 class Solution {
 public:
+  // int minSubArrayLen(int s, vector<int>& nums) {
+  //   int minLen = INT_MAX;
+  //   int sum = 0;
+  //   int i = 0;
+  //   int j = 0;
+
+  //   for (i = 0; i < nums.size(); i++) {
+  //     for (j = i, sum = 0; j < nums.size() && sum < s; j++) {
+  //       sum += nums[j];
+  //     }
+
+  //     if (sum >= s) {
+  //       minLen = min(minLen, j - i);
+  //     }
+  //   }
+
+  //   return minLen == INT_MAX ? 0 : minLen;
+  // }
+
+  // O(n)
   int minSubArrayLen(int s, vector<int>& nums) {
     int minLen = INT_MAX;
     int sum = 0;
-    int i = 0;
-    int j = 0;
+    int pointer = 0;
 
-    for (i = 0; i < nums.size(); i++) {
-      for (j = i, sum = 0; j < nums.size() && sum < s; j++) {
-        sum += nums[j];
-      }
+    for (int i = 0; i < nums.size(); i++) {
+      sum += nums[i];
 
-      if (sum >= s) {
-        minLen = min(minLen, j - i);
+      while (sum >= s) {
+        sum -= nums[pointer++];
+        if (sum < s) {
+          minLen = min(minLen, i - pointer + 2);
+        }
       }
     }
 
