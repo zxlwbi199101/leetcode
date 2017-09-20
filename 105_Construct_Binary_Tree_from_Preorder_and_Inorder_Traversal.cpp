@@ -11,7 +11,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <map>
+#include <stack>
 #include <queue>
 using namespace std;
 
@@ -26,36 +26,36 @@ struct TreeNode {
 // solution 1
 class Solution {
 public:
-  // struct Meta {
-  //   int preStart;
-  //   int preEnd;
-  //   int inStart;
-  //   int inEnd;
-  //   TreeNode *parent;
-
-  //   Meta(int a, int b, int c, int d, TreeNode *e) :
-  //     preStart(a), preEnd(b), inStart(c), inEnd(d), parent(e) {};
-  // };
-
   TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-    map<int, int> posMap;
-    for (int i = 0; i < inorder.size(); i++) {
-      posMap[inorder[i]] = i;
-    }
+    if (!preorder.size() || !inorder.size()) return NULL;
 
     int preIndex = 1;
     int inIndex = 0;
-    TreeNode *temp = NULL;
+    stack<TreeNode *> s;
+
     TreeNode *root = new TreeNode(preorder[0]);
+    TreeNode *temp = root;
+    s.push(root);
 
-    stack<Meta> s(root);
-    while (!s.empty()) {
+    for (; preIndex < preorder.size(); preIndex++) {
       temp = s.top();
-      s.pop();
 
-      inIndex = posMap[temp->val];
+      if (temp->val != inorder[inIndex]) {
+        temp->left = new TreeNode(preorder[preIndex]);
+        s.push(temp->left);
+      } else {
+        while (!s.empty() && inorder[inIndex] == s.top()->val) {
+          inIndex++;
+          temp = s.top();
+          s.pop();
+        }
 
+        temp->right = new TreeNode(preorder[preIndex]);
+        s.push(temp->right);
+      }
     }
+
+    return root;
   }
 };
 
@@ -63,8 +63,8 @@ public:
 int main() {
   Solution solution;
 
-  vector<int> nums1 = {1,2,4,5,8,3,6,7};
-  vector<int> nums2 = {4,2,8,5,1,6,3,7};
+  vector<int> nums1 = {1,2,4,5,8,3,6};
+  vector<int> nums2 = {4,2,8,5,1,6,3};
 
   TreeNode* result = solution.buildTree(nums1, nums2);
 
