@@ -27,22 +27,32 @@ using namespace std;
 // solution 1
 class Solution {
 public:
+  // int removeDuplicates(vector<int>& nums) {
+  //   int num = 0, count = 0, result = 0, index = 0;
+
+  //   for (int n : nums) {
+  //     if (n != num) {
+  //       num = n;
+  //       count = 0;
+  //     }
+
+  //     if (++count <= 2) {
+  //       nums[index++] = n;
+  //       result++;
+  //     }
+  //   }
+
+  //   nums.resize(result);
+
+  //   return result;
+  // }
+
   int removeDuplicates(vector<int>& nums) {
-    int num = 0, count = 0, result = 0, index = 0;
+    int index = 0;
 
     for (int n : nums) {
-      if (n != num) {
-        num = n;
-        count = 0;
-      }
-
-      if (++count <= 2) {
-        nums[index++] = n;
-        result++;
-      }
+      if (index < 2 || n > nums[index - 2]) nums[index++] = n;
     }
-
-    nums.resize(result);
 
     return result;
   }
