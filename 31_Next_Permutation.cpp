@@ -58,7 +58,7 @@ public:
       }
     }
 
-    sort(nums.begin() + lastASCIndex + 1, nums.end());
+    sort(nums.begin() + lastASCIndex, nums.end());
 
   }
 };
@@ -69,10 +69,12 @@ public:
 int main() {
   Solution solution;
 
-  vector<int> nums = {3,1,2};
-  solution.nextPermutation(nums);
-  for (int i : nums) cout << i << endl;
-
+  vector<int> nums = {1,2,3};
+  for (int i = 0; i < 10; i++) {
+    solution.nextPermutation(nums);
+    for (int i : nums) cout << i << " ";
+    cout << endl;
+  }
   return 0;
 }
 
