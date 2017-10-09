@@ -27,27 +27,50 @@ using namespace std;
 class Solution {
 public:
   int repeatedStringMatch(string A, string B) {
-    int start = 0;
-    for (; start < A.size(); start++) {
-      if (A[start] == B[0]) break;
-      else if (start == A.size() - 1) return -1;
+    // build prefix table (of B)
+    vector<int> prefix(B.size(), 0);
+    for (int i = 1, j = 0; i < B.size(); i++) {
+      if (B[i] == B[j]) {
+        j++;
+      } else {
+        j = j ? prefix[j - 1] : 0;
+        while (j) {
+          if (B[i] == B[j]) {
+            j++;
+            break;
+          }
+          j--;
+        }
+      }
+
+      prefix[i] = j;
     }
 
-    int result = start ? 1 : 0;
+    // match from A
+    // i: B starts from index of A
+    // j: index of B
+    for (int i = 0, j = 0; i < A.size(); i++) {
+      for (; j < B.size(); j++) {
+        if (B[j] != A[(i + j) % A.size()]) {
+          i += j + 1; // jump to the next
+          j = j ? prefix[j] : 0;
+          break;
+        }
+      }
 
-    for (int i = 0; i < B.size(); i++, start++) {
-      if (A[start % A.size()] != B[i]) return -1;
-      else if (!(start % A.size())) result++;
+      if (j == B.size()) {
+        return (i ? 1 : 0) + ceil((B.size() * 1.0 - i) / A.size());
+      }
     }
 
-    return result;
+    return -1;
   }
 };
 
 // test
 int main() {
   Solution solution;
-  cout << solution.repeatedStringMatch("abcd", "cdabcdab") << endl;
+  cout << solution.repeatedStringMatch("abcabcabcabc", "abac") << endl;
 
   return 0;
 }
