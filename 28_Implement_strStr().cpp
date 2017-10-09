@@ -50,7 +50,6 @@ public:
 int main() {
   Solution solution;
 
-//  cout << solution.strStr("mississippi", "a") << endl;
   cout << solution.strStr("mississippi", "issip") << endl;
 
   return 0;

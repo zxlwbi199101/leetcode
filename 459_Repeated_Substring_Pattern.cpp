@@ -39,14 +39,14 @@ using namespace std;
 class Solution {
 public:
   bool repeatedSubstringPattern(string s) {
-    int i
+    return (s + s).find(s, 1) != s.size();
   }
 };
 
 // test
 int main() {
   Solution solution;
-  cout << solution.validPalindrome("abcsa") << endl;
+  cout << solution.repeatedSubstringPattern("abcabc") << endl;
 
   return 0;
 }
