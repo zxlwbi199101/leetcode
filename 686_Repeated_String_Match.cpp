@@ -49,7 +49,7 @@ public:
     // match from A
     // i: B starts from index of A
     // j: index of B
-    for (int i = 0, j = 0; i < A.size(); i++) {
+    for (int i = 0, j = 0; i < A.size();) {
       for (; j < B.size(); j++) {
         if (B[j] != A[(i + j) % A.size()]) {
           i += j + 1; // jump to the next
@@ -70,7 +70,7 @@ public:
 // test
 int main() {
   Solution solution;
-  cout << solution.repeatedStringMatch("abcabcabcabc", "abac") << endl;
+  cout << solution.repeatedStringMatch("ba", "ab") << endl;
 
   return 0;
 }
