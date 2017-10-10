@@ -25,13 +25,16 @@ public:
   //   }
   //   return false;
   // }
+  // bool isPowerOfTwo(int n) {
+  //   while (n > 1) {
+  //     if (n % 2) return false;
+  //     if (n == 2) return true;
+  //     n >>= 1;
+  //   }
+  //   return false;
+  // }
   bool isPowerOfTwo(int n) {
-    while (n > 1) {
-      if (n % 2) return false;
-      if (n == 2) return true;
-      n >>= 1;
-    }
-    return false;
+    return n > 0 && 2147483648 % n == 0;
   }
 };
 
