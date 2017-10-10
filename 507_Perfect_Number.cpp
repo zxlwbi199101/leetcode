@@ -27,37 +27,24 @@ using namespace std;
 // solution 1
 class Solution {
 public:
-  // bool judgeSquareSum(int c) {
-  //   for (double a = 0; a * a <= c; a++) {
-  //     double b = sqrt(c - a * a);
-  //     if (b == (int)b) return true;
-  //   }
+  bool checkPerfectNumber(int num) {
+    if (num == 1) return false;
+    int sum = 0;
 
-  //   return false;
-  // }
-
-  bool judgeSquareSum(int c) {
-    if (!c) return true;
-    int i = 0, j = (int)sqrt(c - 1) + 1;
-
-    while (i <= j) {
-      int result = i * i + j * j;
-      if (result == c) return true;
-
-      if (result < c) i++;
-      else j--;
+    for (int i = 2; i * i < num; i++) {
+      if (num % i == 0) {
+        sum += i + num / i;
+      }
     }
 
-    return false;
+    return sum + 1 == num;
   }
 };
 
 // test
 int main() {
   Solution solution;
-  cout << solution.judgeSquareSum(2147483646) << endl;
-  cout << solution.judgeSquareSum(4) << endl;
-  cout << solution.judgeSquareSum(2) << endl;
+  cout << solution.checkPerfectNumber(6) << endl;
 
   return 0;
 }
