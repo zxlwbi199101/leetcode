@@ -32,41 +32,76 @@
 using namespace std;
 
 // solution 1
+// class MinStack {
+// public:
+//   list<int> l;
+//   int m;
+
+//   /** initialize your data structure here. */
+//   MinStack() {
+//     m = INT_MAX;
+//   }
+
+//   void push(int x) {
+//     l.push_back(x);
+//     m = min(x, m);
+//   }
+
+//   void pop() {
+//     if (l.empty()) return;
+
+//     int first = l.back();
+//     l.pop_back();
+
+//     if (first == m) {
+//       m = INT_MAX;
+//       for (auto it = l.begin(); it != l.end(); ++it) {
+//         m = min(*it, m);
+//       }
+//     }
+//   }
+
+//   int top() {
+//     return l.back();
+//   }
+
+//   int getMin() {
+//     return m;
+//   }
+// };
+
+// solution 2
 class MinStack {
 public:
-  list<int> l;
-  int m;
+  stack<int> s, m;
 
   /** initialize your data structure here. */
   MinStack() {
-    m = INT_MAX;
+
   }
 
   void push(int x) {
-    l.push_back(x);
-    m = min(x, m);
+    if (m.empty() || x <= m.top()) {
+      m.push(x);
+    }
+
+    s.push(x);
   }
 
   void pop() {
-    if (l.empty()) return;
+    if (s.empty()) return;
 
-    int first = l.back();
-    l.pop_back();
-
-    if (first == m) {
-      m = INT_MAX;
-      for (auto it = l.begin(); it != l.end(); ++it) {
-        m = min(*it, m);
-      }
-    }
+    if (s.top() == m.top()) m.pop();
+    s.pop();
   }
 
   int top() {
-    return l.back();
+    if (s.empty()) return -1;
+    return s.top();
   }
 
   int getMin() {
-    return m;
+    return m.top();
   }
 };
 
