@@ -53,14 +53,14 @@ public:
 
   int getImportance(vector<Employee*> employees, int id) {
     for (auto e : employees) m[e->id] = e;
-    return walk(employees, id);
+    return walk(id);
   }
 
-  int walk(vector<Employee*> employees, int id) {
+  int walk(int id) {
     Employee* temp = m[id];
     int sum = temp->importance;
 
-    for (auto s : temp->subordinates) sum += getImportance(employees, s);
+    for (auto s : temp->subordinates) sum += walk(s);
     return sum;
   }
 };
