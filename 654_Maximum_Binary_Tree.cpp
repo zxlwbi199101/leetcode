@@ -33,6 +33,7 @@
 #include <stack>
 #include <queue>
 #include <set>
+#include <link>
 #include <list>
 #include <unordered_set>
 #include <unordered_map>
@@ -45,52 +46,37 @@ struct TreeNode {
   TreeNode *right;
   TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
-2 3 1 4 2
+
 // solution 1
 class Solution {
 public:
   TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
-    stack<TreeNode*> stk;
-    int m = INT_MIN;
-    TreeNode* maxNode = NULL;
+    list<TreeNode*> l;
 
     for (int i = 0; i < nums.size(); i++) {
       TreeNode* node = new TreeNode(nums[i]);
-      if (m < nums[i]) {
-        maxNode = node;
-        m = nums[i];
-      }
-
-      if (i == 0) {
-        stk.push(node);
-        continue;
-      }
 
       if (i > 0 && nums[i] < nums[i - 1]) {
-        stk.top()->right = node;
-        stk.push(node);
+        l.back()->right = node;
       } else {
-        TreeNode* bigger = NULL;
         TreeNode* last = NULL;
 
-        while (!stk.empty()) {
-          if (stk.top()->val > nums[i]) {
-            bigger = stk.top();
+        while (!l.empty()) {
+          if (l.back()->val > nums[i]) {
+            l.back()->right = node;
             break;
           }
-          last = stk.top();
-          stk.pop();
+          last = l.back();
+          l.pop_back();
         }
 
         node->left = last;
-        if (bigger) bigger->right = node;
-        stk.push(node);
       }
+      l.push_back(node);
     }
 
-    return maxNode;
+    return l.front();
   }
-
 };
 
 
